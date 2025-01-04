@@ -43,7 +43,7 @@ const Brand = sequelize.define("brand", {
   url: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
-const Row = sequelize.define("role", {
+const Row = sequelize.define("row", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   title: { type: DataTypes.STRING, unique: true, allowNull: false },
@@ -118,7 +118,7 @@ Device.belongsTo(Load);
 Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 
-Device.hasMany(DeviceInfo);
+Device.hasMany(DeviceInfo, { as: "info" });
 DeviceInfo.belongsTo(Device);
 
 Rolling.belongsToMany(Brand, { through: RollingBrand });
