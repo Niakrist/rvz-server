@@ -3,6 +3,7 @@ const uuid = require("uuid");
 
 const { Device, DeviceInfo } = require("../models/models");
 const ApiError = require("../error/ApiError");
+const { constrainedMemory } = require("process");
 
 class DeviceConroller {
   async create(req, res, next) {
@@ -39,13 +40,24 @@ class DeviceConroller {
 
       if (info) {
         info = JSON.parse(info);
-        info.forEach((i) => {
-          return Device.create({
-            title: i.title,
-            description: i.description,
-            deviceId: device.id,
-          });
-        });
+
+        await Promise.all(
+          info.map(async (i) => {
+            await DeviceInfo.create({
+              title: i.title,
+              description: i.description,
+              deviceId: device.id,
+            });
+          })
+        );
+
+        // info.forEach((i) => {
+        //   return Device.create({
+        //     title: i.title,
+        //     description: i.description,
+        //     deviceId: device.id,
+        //   });
+        // });
       }
 
       return res.json(device);
@@ -57,7 +69,7 @@ class DeviceConroller {
     let { rollingId, brandId, loadId, rowId, limit, page } = req.query;
 
     page = page || 1;
-    limit = limit || 5;
+    limit = limit || 16;
 
     let offset = page * limit - limit;
 
@@ -183,9 +195,9 @@ class DeviceConroller {
     return res.json(device);
   }
   async getItem(req, res) {
-    const { id } = req.params;
+    const { url } = req.params;
     const device = await Device.findOne({
-      where: { id },
+      where: { url: `/${url}` },
       include: [{ model: DeviceInfo, as: "info" }],
     });
     return res.json(device);

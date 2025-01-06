@@ -4,6 +4,6 @@ const deviceConroller = require("../conrollers/deviceConroller");
 
 router.post("/", deviceConroller.create);
 router.get("/", deviceConroller.getAll);
-router.get("/:id", deviceConroller.getItem);
+router.get("/:url", deviceConroller.getItem);
 
 module.exports = router;
