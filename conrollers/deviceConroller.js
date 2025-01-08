@@ -3,7 +3,6 @@ const uuid = require("uuid");
 
 const { Device, DeviceInfo } = require("../models/models");
 const ApiError = require("../error/ApiError");
-const { constrainedMemory } = require("process");
 
 class DeviceConroller {
   async create(req, res, next) {
