@@ -201,6 +201,17 @@ class DeviceConroller {
     });
     return res.json(device);
   }
+
+  async removeDevice(req, res) {
+    const { id } = req.params;
+
+    const device = await Device.destroy({
+      where: { id },
+      include: [{ model: DeviceInfo, as: "info" }],
+    });
+
+    return res.json(device);
+  }
 }
 
 module.exports = new DeviceConroller();

@@ -13,8 +13,7 @@ class LoadConroller {
     return res.json(loads);
   }
   async put(req, res) {
-    const { id } = req.params;
-    const { name, title, description, url } = req.body;
+    const { id, name, title, description, url } = req.body;
     const load = await Load.findOne({ where: { id } });
     load.name = name;
     load.title = title;
@@ -24,7 +23,7 @@ class LoadConroller {
     return res.json(load);
   }
   async delete(req, res) {
-    const { id } = req.params;
+    const { id } = req.body;
     const load = await Load.destroy({ where: { id } });
     return res.json(load);
   }

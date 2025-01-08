@@ -13,8 +13,7 @@ class BrandConroller {
     return res.json(brands);
   }
   async put(req, res) {
-    const { id } = req.params;
-    const { name, title, description, url } = req.body;
+    const { id, name, title, description, url } = req.body;
     const brand = await Brand.findOne({ where: { id } });
     brand.name = name;
     brand.title = title;
@@ -24,7 +23,7 @@ class BrandConroller {
     return res.json(brand);
   }
   async delete(req, res) {
-    const { id } = req.params;
+    const { id } = req.body;
     const brand = await Brand.destroy({ where: { id } });
     return res.json(brand);
   }

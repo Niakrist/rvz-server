@@ -13,8 +13,7 @@ class RollingConroller {
     return res.json(rollings);
   }
   async put(req, res) {
-    const { id } = req.params;
-    const { name, title, description, url } = req.body;
+    const { id, name, title, description, url } = req.body;
     const rolling = await Rolling.findOne({ where: { id } });
     rolling.name = name;
     rolling.title = title;
@@ -24,7 +23,7 @@ class RollingConroller {
     return res.json(rolling);
   }
   async delete(req, res) {
-    const { id } = req.params;
+    const { id } = req.body;
     const rolling = await Rolling.destroy({ where: { id } });
     return res.json(rolling);
   }
