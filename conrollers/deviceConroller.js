@@ -65,7 +65,7 @@ class DeviceConroller {
     }
   }
   async getAll(req, res) {
-    let { rollingId, brandId, loadId, rowId, limit, page } = req.query;
+    let { brandId, rollingId, loadId, rowId, limit, page } = req.query;
 
     page = page || 1;
     limit = limit || 16;
@@ -129,7 +129,7 @@ class DeviceConroller {
     }
     if (brandId && !rollingId && !loadId && !rowId) {
       device = await Device.findAndCountAll({
-        here: { brandId },
+        where: { brandId },
         limit,
         offset,
       });
@@ -190,6 +190,8 @@ class DeviceConroller {
         offset,
       });
     }
+
+    console.log("device: ", device);
 
     return res.json(device);
   }
